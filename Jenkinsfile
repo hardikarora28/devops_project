@@ -5,16 +5,13 @@ pipeline{
     }
     stages{
         stage("sonar quality check"){
-            agent {
-                docker {
-                    image 'openjdk:11'
-                }
-            }
+            agent any
             steps{
                 script{
                     withSonarQubeEnv('sonarserver') {
-                        sh 'chmod +x gradlew'
-                        sh './gradlew sonarqube --scan'
+                            sh 'chmod +x gradlew'    
+                            sh './gradlew sonarqube --stacktrace'
+                        
                     }
                     timeout(time: 1, unit: 'HOURS') {
                         def qg = waitForQualityGate()

@@ -14,7 +14,9 @@ pipeline{
                 script{
                     withSonarQubeEnv('sonarserver') {
                             sh 'chmod +x gradlew'
+                            sh 'chmod -R 744 /home/.sonar'
                             sh './gradlew sonarqube --stacktrace'
+                        
                     }
                 }
             }
